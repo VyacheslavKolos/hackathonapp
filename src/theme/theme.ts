@@ -7,14 +7,17 @@ const theme = createTheme({
     },
     secondary: {
       main: '#75D2B2',
+      light: '#75D2B266',
     },
     text: {
       primary: '#26239E',
       secondary: '#909090',
+      disabled: '#898989',
     },
-    common: { black: '#000' },
+    common: { black: '#000', white: '#363636' },
     background: {
       default: '#FFFFFF',
+      paper: '#FAFBFC',
     },
   },
 
@@ -33,6 +36,7 @@ const theme = createTheme({
     h3: {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
       fontSize: 24,
+      fontWeight: 600,
     },
     h4: {
       fontFamily: ['Montserrat', 'sans-serif'].join(','),
@@ -48,6 +52,15 @@ const theme = createTheme({
     },
   },
 
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1200,
+      xl: 1440,
+    },
+  },
   components: {
     MuiTextField: {
       styleOverrides: {

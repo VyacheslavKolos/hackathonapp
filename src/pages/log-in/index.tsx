@@ -1,18 +1,54 @@
 import { FC } from 'react';
-import { Box, Button, Link, Typography, useTheme } from '@mui/material';
+import { Box, CircularProgress, Link, Typography, useTheme } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useLocalStorage } from 'usehooks-ts';
+
+import { useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
 import TextFieldController from '../components/inputs/controlers/TextFieldController.tsx';
 import PasswordFieldController from '../components/inputs/controlers/PasswordFieldController.tsx';
 import Routes from '../../hooks/router/routes.enum.ts';
 import CheckBoxController from '../components/inputs/controlers/CheckBoxController.tsx';
+import { SignUpStyledButton, TypographyAlignedCenter } from '../sign-up/SignUp.styled.tsx';
+import { useLoginMutation } from '../../redux/api/authApiSlice.ts';
+import useCustomSnackbar from '../../hooks/useCustomSnackbar.ts';
+import { handleApiError } from '../../constants/heplerFunctions.ts';
 
 const LogInPage: FC = () => {
   const theme = useTheme();
+  const { callSnackbar } = useCustomSnackbar();
+  const navigate = useNavigate();
+  const [, setTokens] = useLocalStorage('tokens', '');
 
   const form = useForm({
     mode: 'onChange',
   });
+
+  const { getValues } = form;
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const handleSubmit = async () => {
+    try {
+      const credentials = getValues();
+      delete credentials.privacy;
+      const userData = await login(credentials).unwrap();
+      setTokens({ ...userData });
+      navigate(Routes.Home);
+    } catch (err) {
+      callSnackbar(handleApiError(err as any), 'error');
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}
+      >
+        <CircularProgress size={200} />
+      </Box>
+    );
+  }
 
   return (
     <AuthLayout isReversed imgWidth={570}>
@@ -30,7 +66,7 @@ const LogInPage: FC = () => {
           </Typography>
 
           <Box display="flex" flexDirection="column" gap="24px">
-            <TextFieldController name="email" label="Електронна пошта" fullWidth />
+            <TextFieldController name="username" label="Електронна пошта" fullWidth />
             <PasswordFieldController name="password" label="Пароль" fullWidth />
 
             <Box display="flex" justifyContent="space-between">
@@ -44,15 +80,7 @@ const LogInPage: FC = () => {
             </Box>
           </Box>
 
-          <Button
-            fullWidth
-            sx={{
-              background: theme.palette.secondary.main,
-              marginTop: '40px',
-              marginBottom: '16px',
-              height: '48px',
-            }}
-          >
+          <SignUpStyledButton fullWidth onClick={handleSubmit}>
             <Typography
               variant="h6"
               color={theme.palette.common.black}
@@ -60,20 +88,16 @@ const LogInPage: FC = () => {
             >
               Вхід
             </Typography>
-          </Button>
+          </SignUpStyledButton>
 
           <Link href={Routes.SignUp} sx={{ textDecoration: 'none' }}>
             <Box display="flex" justifyContent="center">
-              <Typography
-                variant="h6"
-                color={theme.palette.primary.main}
-                sx={{ display: 'flex', alignItems: 'center' }}
-              >
+              <TypographyAlignedCenter variant="h6" color={theme.palette.primary.main}>
                 Немає облікового запису?&nbsp;
                 <Typography variant="h6" fontWeight={600}>
                   Зареєструватися
                 </Typography>
-              </Typography>
+              </TypographyAlignedCenter>
             </Box>
           </Link>
         </FormProvider>
