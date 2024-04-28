@@ -31,7 +31,7 @@ const AdsItem = () => {
           <Button
             sx={{ height: '49px', bgcolor: theme.palette.background.default, padding: '14px' }}
           >
-            Кнопка
+            Відгукнутися
           </Button>
         </Box>
       </Box>
