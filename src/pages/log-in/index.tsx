@@ -34,7 +34,7 @@ const LogInPage: FC = () => {
       delete credentials.privacy;
       const userData = await login(credentials).unwrap();
       setTokens({ ...userData });
-      navigate(Routes.Home);
+      navigate(Routes.Ads);
     } catch (err) {
       callSnackbar(handleApiError(err as any), 'error');
     }

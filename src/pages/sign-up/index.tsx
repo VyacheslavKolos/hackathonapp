@@ -35,7 +35,7 @@ const SignInPage: FC = () => {
       userData = { ...userData, username: userData.email };
       const tokens = await register(userData).unwrap();
       setTokens({ ...tokens });
-      navigate(Routes.Home);
+      navigate(Routes.Ads);
     } catch (err) {
       callSnackbar(handleApiError(err as any), 'error');
     }

@@ -31,7 +31,6 @@ function getPublicRoutes() {
         {
           path: Routes.Ads,
           element: <AdsPage />,
-          index: true,
         },
         {
           path: Routes.Requests,
