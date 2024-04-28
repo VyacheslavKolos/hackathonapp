@@ -17,12 +17,12 @@ const HomeLayout: FC = () => {
     refetchOnFocus: true,
   });
 
-  const { first_name: firstName, last_name: lastName, email } = data;
+  const { first_name: firstName, last_name: lastName, email, helper } = data;
 
   return (
     <Box bgcolor={theme.palette.background.paper}>
       <StyledContainer maxWidth="xl">
-        <Header userName={firstName} />
+        <Header userName={firstName} helper={helper} />
         <Box
           display="flex"
           flexDirection="column"

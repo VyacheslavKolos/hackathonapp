@@ -10,5 +10,8 @@ The app itself is hosted on Vercel. You can access it [here](https://hackathonap
 Needz was built using React(Vite) + Django, backend uses SQLite as database, but it's easily replaceable. It uses specific deploy config, written primarily for Heroku to enable continuous CI/CD. App deploys on push to the main branch of this repo.
 FrontEnd main stack: Typescript, Material-UI, React-Redux Toolkit,  RTK Query, react-router-dom, react-hook-form, ESLint.
 
+## Design mockup
+Figma link: [here](https://www.figma.com/file/zQovKdtikLEx1MaZVli1kc/Hackath0n?type=design&node-id=0%3A1&mode=design&t=6naB5SNPHdY5DprS-1
+)
 ## How to deploy locally
 In order to deploy locally, you need to have npm installed on your machine. To install dependencies and run it locally, you should clone this repo, then run 'dev' script from package.json file or write npm run dev in the console
